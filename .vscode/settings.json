@@ -1,0 +1,4 @@
+{
+    // 使用tab 而不是4个空格
+    "editor.insertSpaces": false,
+}

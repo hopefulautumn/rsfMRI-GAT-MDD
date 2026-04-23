@@ -1,0 +1,51 @@
+{
+  "split": {
+    "train_size": 1126,
+    "val_size": 162,
+    "test_size": 323,
+    "train_ratio": 0.7,
+    "val_ratio": 0.1,
+    "test_ratio": 0.2
+  },
+  "best_epoch": 2,
+  "best_val_loss": 0.6980728832158175,
+  "best_val_metrics": {
+    "accuracy": 0.5679012345679012,
+    "precision": 0.5625,
+    "recall": 0.75,
+    "f1": 0.6428571428571429,
+    "auc": 0.5496031746031746,
+    "loss": 0.6980728832158175
+  },
+  "test_metrics": {
+    "accuracy": 0.56656346749226,
+    "precision": 0.5579399141630901,
+    "recall": 0.7784431137724551,
+    "f1": 0.65,
+    "auc": 0.5898587440503609,
+    "loss": 0.6971800639515832
+  },
+  "config": {
+    "npz_path": "processed/rest_meta_mdd_fc.npz",
+    "output_dir": "outputs/gat_split_712_formal",
+    "train_ratio": 0.7,
+    "val_ratio": 0.1,
+    "test_ratio": 0.2,
+    "epochs": 200,
+    "batch_size": 16,
+    "lr": 0.001,
+    "weight_decay": 0.0005,
+    "hidden_channels": 64,
+    "num_heads": 4,
+    "dropout": 0.2,
+    "lr_step_size": 50,
+    "lr_gamma": 0.5,
+    "early_stop_patience": 20,
+    "early_stop_min_delta": 0.0001,
+    "threshold": 0.0,
+    "top_k": 20,
+    "node_feature_mode": "fc_row",
+    "seed": 42,
+    "max_samples": 0
+  }
+}

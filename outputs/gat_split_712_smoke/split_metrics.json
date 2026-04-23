@@ -1,0 +1,51 @@
+{
+  "split": {
+    "train_size": 125,
+    "val_size": 19,
+    "test_size": 36,
+    "train_ratio": 0.7,
+    "val_ratio": 0.1,
+    "test_ratio": 0.2
+  },
+  "best_epoch": 3,
+  "best_val_loss": 3.2815847589517944e-05,
+  "best_val_metrics": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "auc": 0.0,
+    "loss": 3.2815847589517944e-05
+  },
+  "test_metrics": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "auc": 0.0,
+    "loss": 1.1371856392846288e-05
+  },
+  "config": {
+    "npz_path": "processed/rest_meta_mdd_fc.npz",
+    "output_dir": "outputs/gat_split_712_smoke",
+    "train_ratio": 0.7,
+    "val_ratio": 0.1,
+    "test_ratio": 0.2,
+    "epochs": 8,
+    "batch_size": 16,
+    "lr": 0.001,
+    "weight_decay": 0.0005,
+    "hidden_channels": 64,
+    "num_heads": 4,
+    "dropout": 0.2,
+    "lr_step_size": 50,
+    "lr_gamma": 0.5,
+    "early_stop_patience": 4,
+    "early_stop_min_delta": 0.0001,
+    "threshold": 0.0,
+    "top_k": 20,
+    "node_feature_mode": "fc_row",
+    "seed": 42,
+    "max_samples": 180
+  }
+}

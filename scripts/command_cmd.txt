@@ -1,0 +1,64 @@
+uv run train_gat_split.py ^
+	--npz-path processed/rest_meta_mdd_fc.npz ^
+	--output-dir outputs/gat_split_712_smoke ^
+	--epochs 8 ^
+	--batch-size 16 ^
+	--lr 1e-3 ^
+	--weight-decay 5e-4 ^
+	--hidden-channels 64 ^
+	--num-heads 4 ^
+	--dropout 0.2 ^
+	--top-k 10 ^
+	--node-feature-mode fc_row ^
+	--seed 42 ^
+	--max-samples 180 ^
+	--early-stop-patience 4
+
+
+uv run train_gat_split.py ^
+	--npz-path processed/rest_meta_mdd_fc.npz ^
+	--output-dir outputs/gat_split_712_formal ^
+	--epochs 200 ^
+	--batch-size 16 ^
+	--lr 1e-3 ^
+	--weight-decay 5e-4 ^
+	--hidden-channels 64 ^
+	--num-heads 4 ^
+	--dropout 0.2 ^
+	--top-k 20 ^
+	--node-feature-mode fc_row ^
+	--seed 42
+
+
+
+uv run train_gat_cv.py ^
+	--npz-path processed/rest_meta_mdd_fc.npz ^
+	--output-dir outputs/gat_cv_smoke ^
+	--n-splits 3 ^
+	--epochs 8 ^
+	--batch-size 16 ^
+	--lr 1e-3 ^
+	--weight-decay 5e-4 ^
+	--hidden-channels 64 ^
+	--num-heads 4 ^
+	--dropout 0.2 ^
+	--top-k 10 ^
+	--node-feature-mode fc_row ^
+	--seed 42 ^
+	--max-samples 180
+
+
+uv run train_gat_cv.py ^
+	--npz-path processed/rest_meta_mdd_fc.npz ^
+	--output-dir outputs/gat_cv_formal ^
+	--n-splits 5 ^
+	--epochs 50 ^
+	--batch-size 16 ^
+	--lr 1e-3 ^
+	--weight-decay 5e-4 ^
+	--hidden-channels 64 ^
+	--num-heads 4 ^
+	--dropout 0.2 ^
+	--top-k 20 ^
+	--node-feature-mode fc_row ^
+	--seed 42

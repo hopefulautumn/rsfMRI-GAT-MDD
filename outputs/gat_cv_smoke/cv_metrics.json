@@ -1,0 +1,51 @@
+{
+  "mean_accuracy": 1.0,
+  "mean_f1": 1.0,
+  "mean_auc": 0.0,
+  "std_accuracy": 0.0,
+  "std_f1": 0.0,
+  "std_auc": 0.0,
+  "fold_metrics": [
+    {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auc": 0.0,
+      "loss": 0.0009459198481636122
+    },
+    {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auc": 0.0,
+      "loss": 0.0009259661193937064
+    },
+    {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auc": 0.0,
+      "loss": 0.002171058743260801
+    }
+  ],
+  "config": {
+    "npz_path": "processed/rest_meta_mdd_fc.npz",
+    "output_dir": "outputs/gat_cv_smoke",
+    "n_splits": 3,
+    "epochs": 1,
+    "batch_size": 8,
+    "lr": 0.001,
+    "weight_decay": 0.0005,
+    "hidden_channels": 64,
+    "num_heads": 4,
+    "dropout": 0.2,
+    "threshold": 0.0,
+    "top_k": 10,
+    "node_feature_mode": "fc_row",
+    "seed": 42,
+    "max_samples": 120
+  }
+}

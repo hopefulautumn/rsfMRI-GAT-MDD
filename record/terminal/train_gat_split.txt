@@ -1,0 +1,33 @@
+
+Project   on  main [?] is 📦 v0.1.0 via 🐍 v3.10.17 (project) 
+❯ uv run train_gat_split.py \    
+  --npz-path processed/rest_meta_mdd_fc.npz \
+  --output-dir outputs/gat_split_712_formal \
+  --epochs 200 \
+  --batch-size 16 \
+  --lr 1e-3 \
+  --weight-decay 5e-4 \
+  --hidden-channels 64 \
+  --num-heads 4 \
+  --dropout 0.2 \
+  --top-k 20 \
+  --node-feature-mode fc_row \
+  --seed 42
+设备: cpu
+样本总数: 1611 | 输入维度: 116
+划分结果: train=1126, val=162, test=323
+Epoch 001 | lr=0.001000 | train_loss=0.6931 | val_loss=0.7183 | val_f1=0.4690 | val_auc=0.5000
+Epoch 005 | lr=0.001000 | train_loss=0.5618 | val_loss=0.7380 | val_f1=0.6321 | val_auc=0.5945
+Epoch 010 | lr=0.001000 | train_loss=0.4068 | val_loss=0.8707 | val_f1=0.6077 | val_auc=0.5868
+Epoch 015 | lr=0.001000 | train_loss=0.2169 | val_loss=1.4043 | val_f1=0.6458 | val_auc=0.6154
+Epoch 020 | lr=0.001000 | train_loss=0.0944 | val_loss=1.9243 | val_f1=0.6480 | val_auc=0.6171
+触发早停：验证集 loss 连续 20 个 epoch 未改善。
+
+===== 7:1:2 测试集结果 =====
+Accuracy : 0.5666
+Precision: 0.5579
+Recall   : 0.7784
+F1       : 0.6500
+AUC      : 0.5899
+已保存指标: outputs/gat_split_712_formal/split_metrics.json
+已保存最优模型: outputs/gat_split_712_formal/checkpoints/best_model.pt
