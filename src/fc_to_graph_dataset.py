@@ -43,13 +43,14 @@ class GraphBuildConfig:
     node_feature_mode: str = "fc_row"  # one of: fc_row, ones
 
 
-def load_fc_npz(npz_path: Path) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def load_fc_npz(npz_path: Path) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """读取预处理输出的 npz 数据包。
 
     Returns:
         fc_matrices: 形状 [N, R, R]，N 为被试数，R 为 ROI 数。
         labels:      形状 [N]，二分类标签。
         group_names: 形状 [N]，字符串分组名（如 MDD/HC）。
+        site_ids:    形状 [N]，站点 ID（如 S01/S20）。
     """
 
     # allow_pickle=True 用于兼容 object 数组（group_names 可能是 object 类型）。
@@ -59,7 +60,12 @@ def load_fc_npz(npz_path: Path) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     # 标签统一为 int64，以兼容 PyTorch 的分类损失函数。
     labels = np.asarray(data["labels"], dtype=np.int64)
     group_names = np.asarray(data["group_names"], dtype=object)
-    return fc_matrices, labels, group_names
+    # 向后兼容：旧版 npz 可能没有 site_ids。
+    if "site_ids" in data:
+        site_ids = np.asarray(data["site_ids"], dtype=object)
+    else:
+        site_ids = np.asarray(["UNK"] * len(labels), dtype=object)
+    return fc_matrices, labels, group_names, site_ids
 
 
 def _build_node_features(fc_matrix: np.ndarray, mode: str) -> torch.Tensor:
@@ -165,7 +171,7 @@ def build_graph_dataset(
     """
 
     # 读取 FC/标签。
-    fc_matrices, labels, _ = load_fc_npz(npz_path)
+    fc_matrices, labels, _, _ = load_fc_npz(npz_path)
 
     if max_samples is not None and max_samples > 0:
         # 小样本模式：用于快速 smoke test，不建议用于正式指标。

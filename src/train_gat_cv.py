@@ -19,11 +19,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, roc_auc_score
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold, StratifiedGroupKFold
 from torch_geometric.loader import DataLoader
 from torch_geometric.nn import GATv2Conv, global_mean_pool
 
-from fc_to_graph_dataset import GraphBuildConfig, build_graph_dataset
+from fc_to_graph_dataset import GraphBuildConfig, build_graph_dataset, load_fc_npz
 
 
 class GATClassifier(nn.Module):
@@ -204,6 +204,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--threshold", type=float, default=0.0)
     parser.add_argument("--top-k", type=int, default=20)
     parser.add_argument("--node-feature-mode", type=str, default="fc_row", choices=["fc_row", "ones"])
+    parser.add_argument(
+        "--cv-mode",
+        type=str,
+        default="auto",
+        choices=["auto", "grouped", "stratified"],
+        help="CV strategy: auto=prefer grouped if site_ids available, grouped=force StratifiedGroupKFold, stratified=force StratifiedKFold",
+    )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--max-samples", type=int, default=0)
     return parser.parse_args()
@@ -229,20 +236,72 @@ def main() -> None:
         config=config,
         max_samples=(args.max_samples if args.max_samples > 0 else None),
     )
+    _, labels_from_npz, _, site_ids = load_fc_npz(args.npz_path)
+    if args.max_samples > 0:
+        labels_from_npz = labels_from_npz[: args.max_samples]
+        site_ids = site_ids[: args.max_samples]
+
+    if len(labels_from_npz) != len(labels):
+        raise ValueError(
+            "标签长度不一致：build_graph_dataset 与 load_fc_npz 结果不匹配，"
+            f"got {len(labels)} vs {len(labels_from_npz)}"
+        )
+    labels = labels_from_npz
+
+    if len(graphs) == 0:
+        raise ValueError("图数据集为空，请检查 npz_path 或 max_samples 设置")
+
+    first_x = graphs[0].x
+    if first_x is None or first_x.ndim != 2:
+        raise ValueError("无效节点特征：graph.x 为空或形状不是二维")
 
     # 节点输入维度取决于 node_feature_mode。
-    in_channels = graphs[0].x.shape[1]
+    in_channels = int(first_x.shape[1])
     print(f"Loaded {len(graphs)} graphs | in_channels={in_channels}")
 
     output_dir = args.output_dir
     ckpt_dir = output_dir / "checkpoints"
     ckpt_dir.mkdir(parents=True, exist_ok=True)
 
-    # 分层 K 折：保持每折类别比例与总体近似一致。
-    skf = StratifiedKFold(n_splits=args.n_splits, shuffle=True, random_state=args.seed)
+    # 支持可控对照：grouped / stratified / auto。
+    unique_sites = np.unique(site_ids)
+    has_valid_site_ids = len(unique_sites) > 1 and not np.all(site_ids == "UNK")
+
+    if args.cv_mode == "grouped" and not has_valid_site_ids:
+        raise ValueError(
+            "--cv-mode grouped 需要有效的 site_ids（且至少两个站点），"
+            "请先重新运行 src/build_fc_dataset.py 生成包含 site_ids 的 npz。"
+        )
+
+    use_grouped_cv = (args.cv_mode == "grouped") or (
+        args.cv_mode == "auto" and has_valid_site_ids
+    )
+
+    if use_grouped_cv:
+        splitter = StratifiedGroupKFold(
+            n_splits=args.n_splits,
+            shuffle=True,
+            random_state=args.seed,
+        )
+        split_iter = splitter.split(np.zeros(len(labels)), labels, groups=site_ids)
+        print(
+            f"Using StratifiedGroupKFold | cv_mode={args.cv_mode} | "
+            f"n_splits={args.n_splits} | n_sites={len(unique_sites)}"
+        )
+    else:
+        # stratified 或 auto 但站点信息不可用时，使用普通分层 K 折。
+        splitter = StratifiedKFold(n_splits=args.n_splits, shuffle=True, random_state=args.seed)
+        split_iter = splitter.split(np.zeros(len(labels)), labels)
+        reason = (
+            "forced by --cv-mode stratified"
+            if args.cv_mode == "stratified"
+            else "site_ids unavailable or single-site"
+        )
+        print(f"Using StratifiedKFold | cv_mode={args.cv_mode} | reason={reason}")
+
     fold_metrics = []
 
-    for fold_idx, (train_idx, val_idx) in enumerate(skf.split(np.zeros(len(labels)), labels), start=1):
+    for fold_idx, (train_idx, val_idx) in enumerate(split_iter, start=1):
         train_graphs = [graphs[i] for i in train_idx]
         val_graphs = [graphs[i] for i in val_idx]
 
@@ -277,6 +336,8 @@ def main() -> None:
         "std_accuracy": float(np.std([m["accuracy"] for m in fold_metrics])),
         "std_f1": float(np.std([m["f1"] for m in fold_metrics])),
         "std_auc": float(np.std([m["auc"] for m in fold_metrics])),
+        "cv_splitter": splitter.__class__.__name__,
+        "n_sites": int(len(unique_sites)),
         "fold_metrics": fold_metrics,
         "config": serializable_config,
     }

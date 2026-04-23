@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import re
 
 import numpy as np
 from scipy.io import loadmat
@@ -36,7 +37,17 @@ class SubjectRecord:
 
     subject_index: int
     group_name: str
+    site_id: str
     mat_path: Path
+
+
+def extract_site_id(mat_path: Path) -> str:
+    """从文件名中提取站点 ID（如 S01、S20）。"""
+
+    m = re.match(r"^ROISignals_(S\d+)-\d+-\d+\.mat$", mat_path.name)
+    if m is None:
+        raise ValueError(f"无法从文件名解析站点 ID: {mat_path.name}")
+    return m.group(1)
 
 
 def load_labels(label_path: Path) -> np.ndarray:
@@ -70,7 +81,15 @@ def collect_subjects(data_root: Path, group_order: tuple[str, str]) -> list[Subj
     for group in group_order:
         # 文件名排序确保可复现：同一数据目录下每次运行顺序一致。
         for mat_path in sorted((data_root / group).glob("*.mat")):
-            subjects.append(SubjectRecord(subject_index=idx, group_name=group, mat_path=mat_path))
+            site_id = extract_site_id(mat_path)
+            subjects.append(
+                SubjectRecord(
+                    subject_index=idx,
+                    group_name=group,
+                    site_id=site_id,
+                    mat_path=mat_path,
+                )
+            )
             idx += 1
     return subjects
 
@@ -123,6 +142,8 @@ def main() -> None:
     fc_matrices: list[np.ndarray] = []
     # 记录每个被试的组名字符串，便于调试或后续分析（如分层抽样）。
     group_names: list[str] = []
+    # 记录每个被试的站点 ID（如 S01），用于后续分组交叉验证。
+    site_ids: list[str] = []
 
     for subject in subjects:
         # 每个被试独立计算一个 [R, R] FC 矩阵。
@@ -130,6 +151,7 @@ def main() -> None:
         fc = compute_fc(ts)
         fc_matrices.append(fc)
         group_names.append(subject.group_name)
+        site_ids.append(subject.site_id)
 
     # 堆叠后形状为 [N, R, R]。
     fc_stack = np.stack(fc_matrices, axis=0)
@@ -143,6 +165,8 @@ def main() -> None:
         labels=labels,
         # 记录每个样本从路径推断的组名，便于回溯。
         group_names=np.asarray(group_names, dtype=object),
+        # 记录每个样本站点 ID，供分组交叉验证使用。
+        site_ids=np.asarray(site_ids, dtype=object),
         # 显式保存读取顺序，避免后续脚本误用默认顺序。
         group_order=np.asarray(GROUP_ORDER, dtype=object),
     )
