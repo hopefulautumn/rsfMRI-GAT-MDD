@@ -1,0 +1,287 @@
+
+rsfMRI-GAT-MDD   on  main [?] is 📦 v0.1.0 via 🐍 v3.14.0 took 1h14m51s 
+❯ 
+uv run src/train_gat_loso.py \
+--npz-path processed/rest_meta_mdd_fc.npz \
+--output-dir outputs/gat_loso_seed42 \
+--epochs 50 \
+--batch-size 16 \
+--lr 1e-3 \
+--weight-decay 5e-4 \
+--hidden-channels 64 \
+--num-heads 4 \
+--dropout 0.2 \
+--top-k 20 \
+--node-feature-mode fc_row \
+--seed 42 \
+--inner-val-ratio 0.1
+Device: cpu
+Loaded 1611 graphs | in_channels=116 | n_sites=17
+
+===== LOSO Site S01 =====
+train=1318 | inner_val=147 | test=146
+Site S01 Epoch 001 | train_loss=0.7089 | inner_val_auc=0.6438 | inner_val_f1=0.1446
+Site S01 Epoch 005 | train_loss=0.6866 | inner_val_auc=0.5973 | inner_val_f1=0.6667
+Site S01 Epoch 010 | train_loss=0.6750 | inner_val_auc=0.6416 | inner_val_f1=0.4386
+Site S01 Epoch 015 | train_loss=0.6539 | inner_val_auc=0.6347 | inner_val_f1=0.6420
+Site S01 Epoch 020 | train_loss=0.6324 | inner_val_auc=0.6533 | inner_val_f1=0.6282
+Site S01 Epoch 025 | train_loss=0.5983 | inner_val_auc=0.6112 | inner_val_f1=0.6866
+Site S01 Epoch 030 | train_loss=0.5844 | inner_val_auc=0.6601 | inner_val_f1=0.6174
+Site S01 Epoch 035 | train_loss=0.5229 | inner_val_auc=0.6831 | inner_val_f1=0.6216
+Site S01 Epoch 040 | train_loss=0.4830 | inner_val_auc=0.6414 | inner_val_f1=0.6839
+Site S01 Epoch 045 | train_loss=0.4672 | inner_val_auc=0.6470 | inner_val_f1=0.6471
+Site S01 Epoch 050 | train_loss=0.4147 | inner_val_auc=0.6175 | inner_val_f1=0.5441
+Site S01 test | auc=0.6345 | f1=0.5736 | acc=0.6233
+
+===== LOSO Site S02 =====
+train=1422 | inner_val=159 | test=30
+Site S02 Epoch 001 | train_loss=0.7080 | inner_val_auc=0.6322 | inner_val_f1=0.5455
+Site S02 Epoch 005 | train_loss=0.6850 | inner_val_auc=0.7132 | inner_val_f1=0.6780
+Site S02 Epoch 010 | train_loss=0.6775 | inner_val_auc=0.6571 | inner_val_f1=0.4848
+Site S02 Epoch 015 | train_loss=0.6481 | inner_val_auc=0.6671 | inner_val_f1=0.6667
+Site S02 Epoch 020 | train_loss=0.6150 | inner_val_auc=0.6631 | inner_val_f1=0.5833
+Site S02 Epoch 025 | train_loss=0.5875 | inner_val_auc=0.6748 | inner_val_f1=0.6633
+Site S02 Epoch 030 | train_loss=0.5530 | inner_val_auc=0.6332 | inner_val_f1=0.6264
+Site S02 Epoch 035 | train_loss=0.5181 | inner_val_auc=0.6946 | inner_val_f1=0.6506
+Site S02 Epoch 040 | train_loss=0.4712 | inner_val_auc=0.6560 | inner_val_f1=0.6667
+Site S02 Epoch 045 | train_loss=0.4507 | inner_val_auc=0.6429 | inner_val_f1=0.6667
+Site S02 Epoch 050 | train_loss=0.4299 | inner_val_auc=0.6646 | inner_val_f1=0.6093
+Site S02 test | auc=0.5089 | f1=0.6957 | acc=0.5333
+
+===== LOSO Site S04 =====
+train=1413 | inner_val=157 | test=41
+Site S04 Epoch 001 | train_loss=0.7066 | inner_val_auc=0.6096 | inner_val_f1=0.6807
+Site S04 Epoch 005 | train_loss=0.6780 | inner_val_auc=0.5643 | inner_val_f1=0.4252
+Site S04 Epoch 010 | train_loss=0.6583 | inner_val_auc=0.5661 | inner_val_f1=0.6193
+Site S04 Epoch 015 | train_loss=0.6287 | inner_val_auc=0.5534 | inner_val_f1=0.1348
+Site S04 Epoch 020 | train_loss=0.5947 | inner_val_auc=0.6025 | inner_val_f1=0.6452
+Site S04 Epoch 025 | train_loss=0.5693 | inner_val_auc=0.6308 | inner_val_f1=0.6298
+Site S04 Epoch 030 | train_loss=0.5213 | inner_val_auc=0.6425 | inner_val_f1=0.5949
+Site S04 Epoch 035 | train_loss=0.4990 | inner_val_auc=0.6417 | inner_val_f1=0.5455
+Site S04 Epoch 040 | train_loss=0.4701 | inner_val_auc=0.6434 | inner_val_f1=0.6040
+Site S04 Epoch 045 | train_loss=0.4229 | inner_val_auc=0.6222 | inner_val_f1=0.6286
+Site S04 Epoch 050 | train_loss=0.3888 | inner_val_auc=0.6389 | inner_val_f1=0.6584
+Site S04 test | auc=0.7729 | f1=0.6364 | acc=0.6098
+
+===== LOSO Site S07 =====
+train=1385 | inner_val=154 | test=72
+Site S07 Epoch 001 | train_loss=0.7108 | inner_val_auc=0.5677 | inner_val_f1=0.4138
+Site S07 Epoch 005 | train_loss=0.6968 | inner_val_auc=0.5992 | inner_val_f1=0.6810
+Site S07 Epoch 010 | train_loss=0.6818 | inner_val_auc=0.5731 | inner_val_f1=0.4000
+Site S07 Epoch 015 | train_loss=0.6706 | inner_val_auc=0.5720 | inner_val_f1=0.2828
+Site S07 Epoch 020 | train_loss=0.6328 | inner_val_auc=0.5943 | inner_val_f1=0.6339
+Site S07 Epoch 025 | train_loss=0.6026 | inner_val_auc=0.6154 | inner_val_f1=0.6400
+Site S07 Epoch 030 | train_loss=0.5747 | inner_val_auc=0.6478 | inner_val_f1=0.3303
+Site S07 Epoch 035 | train_loss=0.5451 | inner_val_auc=0.6498 | inner_val_f1=0.3684
+Site S07 Epoch 040 | train_loss=0.5194 | inner_val_auc=0.6463 | inner_val_f1=0.4390
+Site S07 Epoch 045 | train_loss=0.5011 | inner_val_auc=0.6397 | inner_val_f1=0.6386
+Site S07 Epoch 050 | train_loss=0.4805 | inner_val_auc=0.6595 | inner_val_f1=0.5694
+Site S07 test | auc=0.6664 | f1=0.5507 | acc=0.5694
+
+===== LOSO Site S08 =====
+train=1371 | inner_val=153 | test=87
+Site S08 Epoch 001 | train_loss=0.7070 | inner_val_auc=0.6108 | inner_val_f1=0.6429
+Site S08 Epoch 005 | train_loss=0.6913 | inner_val_auc=0.6305 | inner_val_f1=0.6289
+Site S08 Epoch 010 | train_loss=0.6698 | inner_val_auc=0.6130 | inner_val_f1=0.6768
+Site S08 Epoch 015 | train_loss=0.6620 | inner_val_auc=0.6110 | inner_val_f1=0.5868
+Site S08 Epoch 020 | train_loss=0.6098 | inner_val_auc=0.6467 | inner_val_f1=0.6474
+Site S08 Epoch 025 | train_loss=0.5831 | inner_val_auc=0.6562 | inner_val_f1=0.6424
+Site S08 Epoch 030 | train_loss=0.5325 | inner_val_auc=0.6560 | inner_val_f1=0.6087
+Site S08 Epoch 035 | train_loss=0.5028 | inner_val_auc=0.6591 | inner_val_f1=0.5655
+Site S08 Epoch 040 | train_loss=0.4663 | inner_val_auc=0.6557 | inner_val_f1=0.6040
+Site S08 Epoch 045 | train_loss=0.4277 | inner_val_auc=0.6295 | inner_val_f1=0.5324
+Site S08 Epoch 050 | train_loss=0.3972 | inner_val_auc=0.6449 | inner_val_f1=0.5352
+Site S08 test | auc=0.5550 | f1=0.4286 | acc=0.5402
+
+===== LOSO Site S09 =====
+train=1363 | inner_val=152 | test=96
+Site S09 Epoch 001 | train_loss=0.7041 | inner_val_auc=0.5552 | inner_val_f1=0.0732
+Site S09 Epoch 005 | train_loss=0.6822 | inner_val_auc=0.6600 | inner_val_f1=0.6900
+Site S09 Epoch 010 | train_loss=0.6832 | inner_val_auc=0.6501 | inner_val_f1=0.5324
+Site S09 Epoch 015 | train_loss=0.6582 | inner_val_auc=0.6627 | inner_val_f1=0.5414
+Site S09 Epoch 020 | train_loss=0.6199 | inner_val_auc=0.6541 | inner_val_f1=0.6471
+Site S09 Epoch 025 | train_loss=0.5945 | inner_val_auc=0.6629 | inner_val_f1=0.6592
+Site S09 Epoch 030 | train_loss=0.5715 | inner_val_auc=0.6627 | inner_val_f1=0.4000
+Site S09 Epoch 035 | train_loss=0.5369 | inner_val_auc=0.6419 | inner_val_f1=0.5906
+Site S09 Epoch 040 | train_loss=0.5130 | inner_val_auc=0.6525 | inner_val_f1=0.6242
+Site S09 Epoch 045 | train_loss=0.4867 | inner_val_auc=0.6485 | inner_val_f1=0.6400
+Site S09 Epoch 050 | train_loss=0.4493 | inner_val_auc=0.6596 | inner_val_f1=0.6316
+Site S09 test | auc=0.7062 | f1=0.6387 | acc=0.5521
+
+===== LOSO Site S10 =====
+train=1386 | inner_val=154 | test=71
+Site S10 Epoch 001 | train_loss=0.7078 | inner_val_auc=0.6199 | inner_val_f1=0.5844
+Site S10 Epoch 005 | train_loss=0.6857 | inner_val_auc=0.5959 | inner_val_f1=0.6300
+Site S10 Epoch 010 | train_loss=0.6634 | inner_val_auc=0.5446 | inner_val_f1=0.6337
+Site S10 Epoch 015 | train_loss=0.6396 | inner_val_auc=0.6012 | inner_val_f1=0.5072
+Site S10 Epoch 020 | train_loss=0.5980 | inner_val_auc=0.5944 | inner_val_f1=0.5806
+Site S10 Epoch 025 | train_loss=0.5484 | inner_val_auc=0.6231 | inner_val_f1=0.6562
+Site S10 Epoch 030 | train_loss=0.5144 | inner_val_auc=0.6015 | inner_val_f1=0.6497
+Site S10 Epoch 035 | train_loss=0.5012 | inner_val_auc=0.6062 | inner_val_f1=0.5638
+Site S10 Epoch 040 | train_loss=0.4846 | inner_val_auc=0.6125 | inner_val_f1=0.5806
+Site S10 Epoch 045 | train_loss=0.4163 | inner_val_auc=0.5958 | inner_val_f1=0.6452
+Site S10 Epoch 050 | train_loss=0.3788 | inner_val_auc=0.6091 | inner_val_f1=0.6292
+Site S10 test | auc=0.6991 | f1=0.6667 | acc=0.6479
+
+===== LOSO Site S11 =====
+train=1416 | inner_val=158 | test=37
+Site S11 Epoch 001 | train_loss=0.7036 | inner_val_auc=0.6799 | inner_val_f1=0.3964
+Site S11 Epoch 005 | train_loss=0.6890 | inner_val_auc=0.6804 | inner_val_f1=0.6125
+Site S11 Epoch 010 | train_loss=0.6761 | inner_val_auc=0.6738 | inner_val_f1=0.6842
+Site S11 Epoch 015 | train_loss=0.6488 | inner_val_auc=0.6871 | inner_val_f1=0.6667
+Site S11 Epoch 020 | train_loss=0.6257 | inner_val_auc=0.6908 | inner_val_f1=0.6837
+Site S11 Epoch 025 | train_loss=0.5830 | inner_val_auc=0.6945 | inner_val_f1=0.5333
+Site S11 Epoch 030 | train_loss=0.5592 | inner_val_auc=0.6751 | inner_val_f1=0.6296
+Site S11 Epoch 035 | train_loss=0.5411 | inner_val_auc=0.6988 | inner_val_f1=0.7016
+Site S11 Epoch 040 | train_loss=0.5170 | inner_val_auc=0.7073 | inner_val_f1=0.7159
+Site S11 Epoch 045 | train_loss=0.4864 | inner_val_auc=0.6996 | inner_val_f1=0.7253
+Site S11 Epoch 050 | train_loss=0.4617 | inner_val_auc=0.6853 | inner_val_f1=0.7045
+Site S11 test | auc=0.4676 | f1=0.5000 | acc=0.4595
+
+===== LOSO Site S13 =====
+train=1417 | inner_val=158 | test=36
+Site S13 Epoch 001 | train_loss=0.7030 | inner_val_auc=0.6365 | inner_val_f1=0.0000
+Site S13 Epoch 005 | train_loss=0.6910 | inner_val_auc=0.5721 | inner_val_f1=0.6638
+Site S13 Epoch 010 | train_loss=0.6806 | inner_val_auc=0.6534 | inner_val_f1=0.4211
+Site S13 Epoch 015 | train_loss=0.6554 | inner_val_auc=0.6623 | inner_val_f1=0.1720
+Site S13 Epoch 020 | train_loss=0.6369 | inner_val_auc=0.6141 | inner_val_f1=0.6701
+Site S13 Epoch 025 | train_loss=0.6188 | inner_val_auc=0.6468 | inner_val_f1=0.4655
+Site S13 Epoch 030 | train_loss=0.5941 | inner_val_auc=0.6596 | inner_val_f1=0.6907
+Site S13 Epoch 035 | train_loss=0.5786 | inner_val_auc=0.6619 | inner_val_f1=0.6984
+Site S13 Epoch 040 | train_loss=0.5456 | inner_val_auc=0.6955 | inner_val_f1=0.6804
+Site S13 Epoch 045 | train_loss=0.5408 | inner_val_auc=0.6947 | inner_val_f1=0.6923
+Site S13 Epoch 050 | train_loss=0.5033 | inner_val_auc=0.6957 | inner_val_f1=0.6629
+Site S13 test | auc=0.5531 | f1=0.6809 | acc=0.5833
+
+===== LOSO Site S14 =====
+train=1366 | inner_val=152 | test=93
+Site S14 Epoch 001 | train_loss=0.7015 | inner_val_auc=0.6249 | inner_val_f1=0.6667
+Site S14 Epoch 005 | train_loss=0.6757 | inner_val_auc=0.6738 | inner_val_f1=0.5890
+Site S14 Epoch 010 | train_loss=0.6649 | inner_val_auc=0.6836 | inner_val_f1=0.2766
+Site S14 Epoch 015 | train_loss=0.6469 | inner_val_auc=0.6999 | inner_val_f1=0.6707
+Site S14 Epoch 020 | train_loss=0.5824 | inner_val_auc=0.7051 | inner_val_f1=0.6187
+Site S14 Epoch 025 | train_loss=0.5421 | inner_val_auc=0.6762 | inner_val_f1=0.6837
+Site S14 Epoch 030 | train_loss=0.5013 | inner_val_auc=0.6360 | inner_val_f1=0.6474
+Site S14 Epoch 035 | train_loss=0.4710 | inner_val_auc=0.6795 | inner_val_f1=0.6456
+Site S14 Epoch 040 | train_loss=0.4215 | inner_val_auc=0.6476 | inner_val_f1=0.6164
+Site S14 Epoch 045 | train_loss=0.4141 | inner_val_auc=0.6327 | inner_val_f1=0.6467
+Site S14 Epoch 050 | train_loss=0.3805 | inner_val_auc=0.6547 | inner_val_f1=0.5882
+Site S14 test | auc=0.5973 | f1=0.5688 | acc=0.4946
+
+===== LOSO Site S15 =====
+train=1389 | inner_val=155 | test=67
+Site S15 Epoch 001 | train_loss=0.6988 | inner_val_auc=0.5285 | inner_val_f1=0.6864
+Site S15 Epoch 005 | train_loss=0.6798 | inner_val_auc=0.5452 | inner_val_f1=0.6864
+Site S15 Epoch 010 | train_loss=0.6751 | inner_val_auc=0.6144 | inner_val_f1=0.6026
+Site S15 Epoch 015 | train_loss=0.6523 | inner_val_auc=0.5692 | inner_val_f1=0.3684
+Site S15 Epoch 020 | train_loss=0.6238 | inner_val_auc=0.5898 | inner_val_f1=0.6762
+Site S15 Epoch 025 | train_loss=0.5808 | inner_val_auc=0.5739 | inner_val_f1=0.4094
+Site S15 Epoch 030 | train_loss=0.5577 | inner_val_auc=0.5702 | inner_val_f1=0.6087
+Site S15 Epoch 035 | train_loss=0.4983 | inner_val_auc=0.5934 | inner_val_f1=0.5732
+Site S15 Epoch 040 | train_loss=0.4801 | inner_val_auc=0.5914 | inner_val_f1=0.5369
+Site S15 Epoch 045 | train_loss=0.4793 | inner_val_auc=0.5659 | inner_val_f1=0.6023
+Site S15 Epoch 050 | train_loss=0.4234 | inner_val_auc=0.5751 | inner_val_f1=0.6230
+Site S15 test | auc=0.6099 | f1=0.5714 | acc=0.5970
+
+===== LOSO Site S17 =====
+train=1376 | inner_val=153 | test=82
+Site S17 Epoch 001 | train_loss=0.7148 | inner_val_auc=0.5854 | inner_val_f1=0.6840
+Site S17 Epoch 005 | train_loss=0.6881 | inner_val_auc=0.6218 | inner_val_f1=0.3366
+Site S17 Epoch 010 | train_loss=0.6719 | inner_val_auc=0.6086 | inner_val_f1=0.6514
+Site S17 Epoch 015 | train_loss=0.6659 | inner_val_auc=0.5996 | inner_val_f1=0.5769
+Site S17 Epoch 020 | train_loss=0.6322 | inner_val_auc=0.5907 | inner_val_f1=0.3238
+Site S17 Epoch 025 | train_loss=0.5962 | inner_val_auc=0.6247 | inner_val_f1=0.6404
+Site S17 Epoch 030 | train_loss=0.5592 | inner_val_auc=0.6452 | inner_val_f1=0.6421
+Site S17 Epoch 035 | train_loss=0.5134 | inner_val_auc=0.6069 | inner_val_f1=0.5248
+Site S17 Epoch 040 | train_loss=0.5002 | inner_val_auc=0.6331 | inner_val_f1=0.6387
+Site S17 Epoch 045 | train_loss=0.4442 | inner_val_auc=0.6194 | inner_val_f1=0.6303
+Site S17 Epoch 050 | train_loss=0.4154 | inner_val_auc=0.6196 | inner_val_f1=0.6339
+Site S17 test | auc=0.5544 | f1=0.5570 | acc=0.5732
+
+===== LOSO Site S19 =====
+train=1405 | inner_val=157 | test=49
+Site S19 Epoch 001 | train_loss=0.7031 | inner_val_auc=0.6379 | inner_val_f1=0.6258
+Site S19 Epoch 005 | train_loss=0.6812 | inner_val_auc=0.6489 | inner_val_f1=0.7182
+Site S19 Epoch 010 | train_loss=0.6619 | inner_val_auc=0.6215 | inner_val_f1=0.6173
+Site S19 Epoch 015 | train_loss=0.6371 | inner_val_auc=0.6254 | inner_val_f1=0.5532
+Site S19 Epoch 020 | train_loss=0.6039 | inner_val_auc=0.6281 | inner_val_f1=0.5075
+Site S19 Epoch 025 | train_loss=0.5648 | inner_val_auc=0.6234 | inner_val_f1=0.6396
+Site S19 Epoch 030 | train_loss=0.5381 | inner_val_auc=0.6415 | inner_val_f1=0.6698
+Site S19 Epoch 035 | train_loss=0.5234 | inner_val_auc=0.6735 | inner_val_f1=0.6738
+Site S19 Epoch 040 | train_loss=0.4783 | inner_val_auc=0.6150 | inner_val_f1=0.5955
+Site S19 Epoch 045 | train_loss=0.4304 | inner_val_auc=0.6410 | inner_val_f1=0.6380
+Site S19 Epoch 050 | train_loss=0.3905 | inner_val_auc=0.6231 | inner_val_f1=0.5828
+Site S19 test | auc=0.6667 | f1=0.5714 | acc=0.5714
+
+===== LOSO Site S20 =====
+train=1020 | inner_val=114 | test=477
+Site S20 Epoch 001 | train_loss=0.7342 | inner_val_auc=0.6280 | inner_val_f1=0.3855
+Site S20 Epoch 005 | train_loss=0.6862 | inner_val_auc=0.6404 | inner_val_f1=0.0000
+Site S20 Epoch 010 | train_loss=0.6773 | inner_val_auc=0.6727 | inner_val_f1=0.4235
+Site S20 Epoch 015 | train_loss=0.6607 | inner_val_auc=0.6573 | inner_val_f1=0.5200
+Site S20 Epoch 020 | train_loss=0.6170 | inner_val_auc=0.6305 | inner_val_f1=0.6116
+Site S20 Epoch 025 | train_loss=0.5517 | inner_val_auc=0.6965 | inner_val_f1=0.6986
+Site S20 Epoch 030 | train_loss=0.4990 | inner_val_auc=0.7097 | inner_val_f1=0.7123
+Site S20 Epoch 035 | train_loss=0.4684 | inner_val_auc=0.6875 | inner_val_f1=0.6803
+Site S20 Epoch 040 | train_loss=0.3826 | inner_val_auc=0.7316 | inner_val_f1=0.6880
+Site S20 Epoch 045 | train_loss=0.3326 | inner_val_auc=0.7014 | inner_val_f1=0.6560
+Site S20 Epoch 050 | train_loss=0.2910 | inner_val_auc=0.7125 | inner_val_f1=0.6719
+Site S20 test | auc=0.6096 | f1=0.5890 | acc=0.5786
+
+===== LOSO Site S21 =====
+train=1320 | inner_val=147 | test=144
+Site S21 Epoch 001 | train_loss=0.7006 | inner_val_auc=0.6248 | inner_val_f1=0.6000
+Site S21 Epoch 005 | train_loss=0.6874 | inner_val_auc=0.6070 | inner_val_f1=0.6733
+Site S21 Epoch 010 | train_loss=0.6686 | inner_val_auc=0.6331 | inner_val_f1=0.4463
+Site S21 Epoch 015 | train_loss=0.6361 | inner_val_auc=0.6007 | inner_val_f1=0.5974
+Site S21 Epoch 020 | train_loss=0.6094 | inner_val_auc=0.5841 | inner_val_f1=0.6286
+Site S21 Epoch 025 | train_loss=0.5697 | inner_val_auc=0.6213 | inner_val_f1=0.6531
+Site S21 Epoch 030 | train_loss=0.5217 | inner_val_auc=0.6059 | inner_val_f1=0.5109
+Site S21 Epoch 035 | train_loss=0.4982 | inner_val_auc=0.6196 | inner_val_f1=0.5373
+Site S21 Epoch 040 | train_loss=0.4459 | inner_val_auc=0.5793 | inner_val_f1=0.6190
+Site S21 Epoch 045 | train_loss=0.3973 | inner_val_auc=0.5941 | inner_val_f1=0.6738
+Site S21 Epoch 050 | train_loss=0.3668 | inner_val_auc=0.5626 | inner_val_f1=0.5395
+Site S21 test | auc=0.6333 | f1=0.3636 | acc=0.5139
+
+===== LOSO Site S22 =====
+train=1415 | inner_val=158 | test=38
+Site S22 Epoch 001 | train_loss=0.7106 | inner_val_auc=0.5538 | inner_val_f1=0.6833
+Site S22 Epoch 005 | train_loss=0.6851 | inner_val_auc=0.6163 | inner_val_f1=0.6780
+Site S22 Epoch 010 | train_loss=0.6737 | inner_val_auc=0.6046 | inner_val_f1=0.6752
+Site S22 Epoch 015 | train_loss=0.6704 | inner_val_auc=0.6163 | inner_val_f1=0.5963
+Site S22 Epoch 020 | train_loss=0.6320 | inner_val_auc=0.6165 | inner_val_f1=0.5479
+Site S22 Epoch 025 | train_loss=0.6082 | inner_val_auc=0.5944 | inner_val_f1=0.6354
+Site S22 Epoch 030 | train_loss=0.6073 | inner_val_auc=0.5971 | inner_val_f1=0.6023
+Site S22 Epoch 035 | train_loss=0.5707 | inner_val_auc=0.5680 | inner_val_f1=0.6573
+Site S22 Epoch 040 | train_loss=0.5629 | inner_val_auc=0.6126 | inner_val_f1=0.4806
+Site S22 Epoch 045 | train_loss=0.5335 | inner_val_auc=0.6041 | inner_val_f1=0.5629
+Site S22 Epoch 050 | train_loss=0.5154 | inner_val_auc=0.6054 | inner_val_f1=0.5732
+Site S22 test | auc=0.6750 | f1=0.6061 | acc=0.6579
+
+===== LOSO Site S23 =====
+train=1409 | inner_val=157 | test=45
+Site S23 Epoch 001 | train_loss=0.7075 | inner_val_auc=0.5275 | inner_val_f1=0.6609
+Site S23 Epoch 005 | train_loss=0.6832 | inner_val_auc=0.6041 | inner_val_f1=0.6723
+Site S23 Epoch 010 | train_loss=0.6866 | inner_val_auc=0.6480 | inner_val_f1=0.3238
+Site S23 Epoch 015 | train_loss=0.6636 | inner_val_auc=0.6360 | inner_val_f1=0.6603
+Site S23 Epoch 020 | train_loss=0.6144 | inner_val_auc=0.6399 | inner_val_f1=0.4882
+Site S23 Epoch 025 | train_loss=0.5804 | inner_val_auc=0.5997 | inner_val_f1=0.5175
+Site S23 Epoch 030 | train_loss=0.5326 | inner_val_auc=0.5981 | inner_val_f1=0.5732
+Site S23 Epoch 035 | train_loss=0.4908 | inner_val_auc=0.5801 | inner_val_f1=0.5442
+Site S23 Epoch 040 | train_loss=0.4853 | inner_val_auc=0.5673 | inner_val_f1=0.5405
+Site S23 Epoch 045 | train_loss=0.4453 | inner_val_auc=0.5841 | inner_val_f1=0.6057
+Site S23 Epoch 050 | train_loss=0.4178 | inner_val_auc=0.5828 | inner_val_f1=0.5490
+Site S23 test | auc=0.6462 | f1=0.6792 | acc=0.6222
+
+===== LOSO Summary =====
+Macro AUC: 0.6210
+Macro F1 : 0.5810
+Macro Acc: 0.5722
+Weighted AUC: 0.6218
+Weighted F1 : 0.5655
+Weighted Acc: 0.5717
+Saved: outputs/gat_loso_seed42/loso_summary.json
+Saved: outputs/gat_loso_seed42/loso_site_metrics.csv
+
+rsfMRI-GAT-MDD   on  main [!?] is 📦 v0.1.0 via 🐍 v3.14.0 took 3h53m54s 
+❯   

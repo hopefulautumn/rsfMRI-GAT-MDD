@@ -1,0 +1,103 @@
+
+
+rsfMRI-GAT-MDD   on  main [!?] is 📦 v0.1.0 via 🐍 v3.14.0 
+❯ uv run src/build_fc_dataset.py  
+已保存文件: processed/rest_meta_mdd_fc.npz
+样本数量: 1611
+每个样本的 FC 形状: (116, 116)
+标签分布: {0: 779, 1: 832}
+读取顺序: ('MDD', 'HC')
+
+rsfMRI-GAT-MDD   on  main [⇡] is 📦 v0.1.0 via 🐍 v3.14.0 took 5s 
+❯ uv run src/train_gat_cv.py \
+  --npz-path processed/rest_meta_mdd_fc.npz \
+  --output-dir outputs/gat_cv_formal_stratified_seed42 \
+  --n-splits 5 \
+  --epochs 50 \
+  --batch-size 16 \
+  --lr 1e-3 \
+  --weight-decay 5e-4 \
+  --hidden-channels 64 \
+  --num-heads 4 \
+  --dropout 0.2 \
+  --top-k 20 \
+  --node-feature-mode fc_row \
+  --seed 42 \
+  --cv-mode stratified
+Device: cpu
+Loaded 1611 graphs | in_channels=116
+Using StratifiedKFold | cv_mode=stratified | reason=forced by --cv-mode stratified
+
+===== Fold 1/5 =====
+Fold 1 Epoch 001 | train_loss=0.7068 | val_auc=0.5509 | val_f1=0.1111
+Fold 1 Epoch 005 | train_loss=0.6833 | val_auc=0.5698 | val_f1=0.0119
+Fold 1 Epoch 010 | train_loss=0.6722 | val_auc=0.5949 | val_f1=0.6785
+Fold 1 Epoch 015 | train_loss=0.6507 | val_auc=0.6024 | val_f1=0.5994
+Fold 1 Epoch 020 | train_loss=0.6208 | val_auc=0.6066 | val_f1=0.5443
+Fold 1 Epoch 025 | train_loss=0.5914 | val_auc=0.6074 | val_f1=0.5749
+Fold 1 Epoch 030 | train_loss=0.5445 | val_auc=0.6194 | val_f1=0.6254
+Fold 1 Epoch 035 | train_loss=0.5239 | val_auc=0.6162 | val_f1=0.5841
+Fold 1 Epoch 040 | train_loss=0.4767 | val_auc=0.6312 | val_f1=0.6284
+Fold 1 Epoch 045 | train_loss=0.4268 | val_auc=0.6194 | val_f1=0.6361
+Fold 1 Epoch 050 | train_loss=0.4127 | val_auc=0.6154 | val_f1=0.6500
+
+===== Fold 2/5 =====
+Fold 2 Epoch 001 | train_loss=0.6932 | val_auc=0.5203 | val_f1=0.0000
+Fold 2 Epoch 005 | train_loss=0.6818 | val_auc=0.5524 | val_f1=0.5738
+Fold 2 Epoch 010 | train_loss=0.6654 | val_auc=0.5749 | val_f1=0.6209
+Fold 2 Epoch 015 | train_loss=0.6400 | val_auc=0.5809 | val_f1=0.6067
+Fold 2 Epoch 020 | train_loss=0.6088 | val_auc=0.6057 | val_f1=0.6507
+Fold 2 Epoch 025 | train_loss=0.5620 | val_auc=0.6127 | val_f1=0.6649
+Fold 2 Epoch 030 | train_loss=0.5034 | val_auc=0.6147 | val_f1=0.6561
+Fold 2 Epoch 035 | train_loss=0.4735 | val_auc=0.6224 | val_f1=0.6965
+Fold 2 Epoch 040 | train_loss=0.4351 | val_auc=0.6283 | val_f1=0.5982
+Fold 2 Epoch 045 | train_loss=0.4351 | val_auc=0.6298 | val_f1=0.6929
+Fold 2 Epoch 050 | train_loss=0.3679 | val_auc=0.6184 | val_f1=0.5424
+
+===== Fold 3/5 =====
+Fold 3 Epoch 001 | train_loss=0.7059 | val_auc=0.5126 | val_f1=0.6765
+Fold 3 Epoch 005 | train_loss=0.6840 | val_auc=0.5844 | val_f1=0.4387
+Fold 3 Epoch 010 | train_loss=0.6716 | val_auc=0.6079 | val_f1=0.4032
+Fold 3 Epoch 015 | train_loss=0.6697 | val_auc=0.5921 | val_f1=0.6062
+Fold 3 Epoch 020 | train_loss=0.6238 | val_auc=0.5990 | val_f1=0.6278
+Fold 3 Epoch 025 | train_loss=0.5797 | val_auc=0.5948 | val_f1=0.5741
+Fold 3 Epoch 030 | train_loss=0.5607 | val_auc=0.5898 | val_f1=0.4082
+Fold 3 Epoch 035 | train_loss=0.5337 | val_auc=0.5813 | val_f1=0.6124
+Fold 3 Epoch 040 | train_loss=0.5221 | val_auc=0.5442 | val_f1=0.4865
+Fold 3 Epoch 045 | train_loss=0.4733 | val_auc=0.5807 | val_f1=0.5192
+Fold 3 Epoch 050 | train_loss=0.4315 | val_auc=0.5931 | val_f1=0.6171
+
+===== Fold 4/5 =====
+Fold 4 Epoch 001 | train_loss=0.7064 | val_auc=0.5127 | val_f1=0.0349
+Fold 4 Epoch 005 | train_loss=0.6788 | val_auc=0.5926 | val_f1=0.5119
+Fold 4 Epoch 010 | train_loss=0.6682 | val_auc=0.5979 | val_f1=0.6316
+Fold 4 Epoch 015 | train_loss=0.6345 | val_auc=0.5935 | val_f1=0.6085
+Fold 4 Epoch 020 | train_loss=0.6208 | val_auc=0.5928 | val_f1=0.4762
+Fold 4 Epoch 025 | train_loss=0.5829 | val_auc=0.6004 | val_f1=0.4931
+Fold 4 Epoch 030 | train_loss=0.5606 | val_auc=0.6233 | val_f1=0.6304
+Fold 4 Epoch 035 | train_loss=0.5328 | val_auc=0.6164 | val_f1=0.4215
+Fold 4 Epoch 040 | train_loss=0.4938 | val_auc=0.6203 | val_f1=0.6213
+Fold 4 Epoch 045 | train_loss=0.4679 | val_auc=0.6196 | val_f1=0.6154
+Fold 4 Epoch 050 | train_loss=0.4077 | val_auc=0.6077 | val_f1=0.5767
+
+===== Fold 5/5 =====
+Fold 5 Epoch 001 | train_loss=0.7003 | val_auc=0.5140 | val_f1=0.6803
+Fold 5 Epoch 005 | train_loss=0.6877 | val_auc=0.6410 | val_f1=0.6730
+Fold 5 Epoch 010 | train_loss=0.6813 | val_auc=0.6521 | val_f1=0.1915
+Fold 5 Epoch 015 | train_loss=0.6685 | val_auc=0.6786 | val_f1=0.6867
+Fold 5 Epoch 020 | train_loss=0.6719 | val_auc=0.6947 | val_f1=0.6996
+Fold 5 Epoch 025 | train_loss=0.6149 | val_auc=0.7134 | val_f1=0.7041
+Fold 5 Epoch 030 | train_loss=0.6015 | val_auc=0.7139 | val_f1=0.5848
+Fold 5 Epoch 035 | train_loss=0.5552 | val_auc=0.7345 | val_f1=0.6036
+Fold 5 Epoch 040 | train_loss=0.5383 | val_auc=0.6958 | val_f1=0.6323
+Fold 5 Epoch 045 | train_loss=0.5136 | val_auc=0.7049 | val_f1=0.6907
+Fold 5 Epoch 050 | train_loss=0.4871 | val_auc=0.7043 | val_f1=0.6708
+
+===== CV Summary =====
+AUC: 0.6521 ± 0.0441
+F1 : 0.6364 ± 0.0429
+Acc: 0.6114 ± 0.0325
+Saved metrics: outputs/gat_cv_formal_stratified_seed42/cv_metrics.json
+
+rsfMRI-GAT-MDD   on  main [?] is 📦 v0.1.0 via 🐍 v3.14.0 took 1h14m51s 
+❯ 

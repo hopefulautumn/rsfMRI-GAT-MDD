@@ -23,7 +23,8 @@ from sklearn.model_selection import StratifiedKFold, StratifiedGroupKFold
 from torch_geometric.loader import DataLoader
 from torch_geometric.nn import GATv2Conv, global_mean_pool
 
-from fc_to_graph_dataset import GraphBuildConfig, build_graph_dataset, load_fc_npz
+from fc_to_graph_dataset import GraphBuildConfig, fc_to_graph, load_fc_npz
+from site_harmonization import CombatHarmonizer
 
 
 class GATClassifier(nn.Module):
@@ -205,6 +206,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--top-k", type=int, default=20)
     parser.add_argument("--node-feature-mode", type=str, default="fc_row", choices=["fc_row", "ones"])
     parser.add_argument(
+        "--site-harmonization",
+        type=str,
+        default="none",
+        choices=["none", "combat"],
+        help="站点校正方式。combat 仅在验证集站点被训练集覆盖时可用。",
+    )
+    parser.add_argument(
         "--cv-mode",
         type=str,
         default="auto",
@@ -214,6 +222,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--max-samples", type=int, default=0)
     return parser.parse_args()
+
+
+def build_graphs_from_fc(fc_matrices: np.ndarray, labels: np.ndarray, config: GraphBuildConfig):
+    """把 [N, R, R] FC 批量转换为图对象列表。"""
+
+    return [
+        fc_to_graph(fc_matrix, int(label), config)
+        for fc_matrix, label in zip(fc_matrices, labels)
+    ]
 
 
 def main() -> None:
@@ -231,33 +248,26 @@ def main() -> None:
         node_feature_mode=args.node_feature_mode,
     )
 
-    graphs, labels = build_graph_dataset(
-        args.npz_path,
-        config=config,
-        max_samples=(args.max_samples if args.max_samples > 0 else None),
-    )
-    _, labels_from_npz, _, site_ids = load_fc_npz(args.npz_path)
+    fc_matrices, labels_from_npz, _, site_ids = load_fc_npz(args.npz_path)
     if args.max_samples > 0:
+        fc_matrices = fc_matrices[: args.max_samples]
         labels_from_npz = labels_from_npz[: args.max_samples]
         site_ids = site_ids[: args.max_samples]
 
-    if len(labels_from_npz) != len(labels):
-        raise ValueError(
-            "标签长度不一致：build_graph_dataset 与 load_fc_npz 结果不匹配，"
-            f"got {len(labels)} vs {len(labels_from_npz)}"
-        )
     labels = labels_from_npz
 
-    if len(graphs) == 0:
+    if len(fc_matrices) == 0:
         raise ValueError("图数据集为空，请检查 npz_path 或 max_samples 设置")
 
-    first_x = graphs[0].x
+    # 先用首样本做一次构图，获取输入维度。
+    first_graph = fc_to_graph(fc_matrices[0], int(labels[0]), config)
+    first_x = first_graph.x
     if first_x is None or first_x.ndim != 2:
         raise ValueError("无效节点特征：graph.x 为空或形状不是二维")
 
     # 节点输入维度取决于 node_feature_mode。
     in_channels = int(first_x.shape[1])
-    print(f"Loaded {len(graphs)} graphs | in_channels={in_channels}")
+    print(f"Loaded {len(fc_matrices)} samples | in_channels={in_channels}")
 
     output_dir = args.output_dir
     ckpt_dir = output_dir / "checkpoints"
@@ -276,6 +286,13 @@ def main() -> None:
     use_grouped_cv = (args.cv_mode == "grouped") or (
         args.cv_mode == "auto" and has_valid_site_ids
     )
+
+    if args.site_harmonization == "combat" and use_grouped_cv:
+        raise ValueError(
+            "当前是站点分组评估（grouped/auto->grouped），验证集包含未见站点，"
+            "标准 ComBat 无法对未见站点 transform。"
+            "如需使用 ComBat，请改用 --cv-mode stratified。"
+        )
 
     if use_grouped_cv:
         splitter = StratifiedGroupKFold(
@@ -302,8 +319,20 @@ def main() -> None:
     fold_metrics = []
 
     for fold_idx, (train_idx, val_idx) in enumerate(split_iter, start=1):
-        train_graphs = [graphs[i] for i in train_idx]
-        val_graphs = [graphs[i] for i in val_idx]
+        train_fc = fc_matrices[train_idx]
+        val_fc = fc_matrices[val_idx]
+        train_labels = labels[train_idx]
+        val_labels = labels[val_idx]
+        train_sites = site_ids[train_idx]
+        val_sites = site_ids[val_idx]
+
+        if args.site_harmonization == "combat":
+            harmonizer = CombatHarmonizer()
+            train_fc = harmonizer.fit_transform_train(train_fc, train_sites)
+            val_fc = harmonizer.transform(val_fc, val_sites)
+
+        train_graphs = build_graphs_from_fc(train_fc, train_labels, config)
+        val_graphs = build_graphs_from_fc(val_fc, val_labels, config)
 
         print(f"\n===== Fold {fold_idx}/{args.n_splits} =====")
         metrics = train_one_fold(

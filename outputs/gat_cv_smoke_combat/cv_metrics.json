@@ -1,0 +1,55 @@
+{
+  "mean_accuracy": 1.0,
+  "mean_f1": 1.0,
+  "mean_auc": 0.0,
+  "std_accuracy": 0.0,
+  "std_f1": 0.0,
+  "std_auc": 0.0,
+  "cv_splitter": "StratifiedKFold",
+  "n_sites": 5,
+  "fold_metrics": [
+    {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auc": 0.0,
+      "loss": 0.0033799837110564113
+    },
+    {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auc": 0.0,
+      "loss": 0.001986917486647144
+    },
+    {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auc": 0.0,
+      "loss": 0.003231648704968393
+    }
+  ],
+  "config": {
+    "npz_path": "processed/rest_meta_mdd_fc.npz",
+    "output_dir": "outputs/gat_cv_smoke_combat",
+    "n_splits": 3,
+    "epochs": 1,
+    "batch_size": 16,
+    "lr": 0.001,
+    "weight_decay": 0.0005,
+    "hidden_channels": 64,
+    "num_heads": 4,
+    "dropout": 0.2,
+    "threshold": 0.0,
+    "top_k": 10,
+    "node_feature_mode": "fc_row",
+    "site_harmonization": "combat",
+    "cv_mode": "stratified",
+    "seed": 42,
+    "max_samples": 180
+  }
+}
