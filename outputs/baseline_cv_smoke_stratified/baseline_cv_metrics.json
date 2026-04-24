@@ -1,0 +1,108 @@
+{
+  "cv_splitter": "StratifiedKFold",
+  "n_sites": 5,
+  "config": {
+    "npz_path": "processed/rest_meta_mdd_fc.npz",
+    "output_dir": "outputs/baseline_cv_smoke_stratified",
+    "n_splits": 3,
+    "cv_mode": "stratified",
+    "seed": 42,
+    "max_samples": 180,
+    "models": "svm,logreg,rf"
+  },
+  "models": {
+    "svm": {
+      "mean_accuracy": NaN,
+      "mean_f1": NaN,
+      "mean_auc": NaN,
+      "std_accuracy": NaN,
+      "std_f1": NaN,
+      "std_auc": NaN,
+      "fold_metrics": [
+        {
+          "accuracy": NaN,
+          "precision": NaN,
+          "recall": NaN,
+          "f1": NaN,
+          "auc": NaN
+        },
+        {
+          "accuracy": NaN,
+          "precision": NaN,
+          "recall": NaN,
+          "f1": NaN,
+          "auc": NaN
+        },
+        {
+          "accuracy": NaN,
+          "precision": NaN,
+          "recall": NaN,
+          "f1": NaN,
+          "auc": NaN
+        }
+      ]
+    },
+    "logreg": {
+      "mean_accuracy": NaN,
+      "mean_f1": NaN,
+      "mean_auc": NaN,
+      "std_accuracy": NaN,
+      "std_f1": NaN,
+      "std_auc": NaN,
+      "fold_metrics": [
+        {
+          "accuracy": NaN,
+          "precision": NaN,
+          "recall": NaN,
+          "f1": NaN,
+          "auc": NaN
+        },
+        {
+          "accuracy": NaN,
+          "precision": NaN,
+          "recall": NaN,
+          "f1": NaN,
+          "auc": NaN
+        },
+        {
+          "accuracy": NaN,
+          "precision": NaN,
+          "recall": NaN,
+          "f1": NaN,
+          "auc": NaN
+        }
+      ]
+    },
+    "rf": {
+      "mean_accuracy": NaN,
+      "mean_f1": NaN,
+      "mean_auc": NaN,
+      "std_accuracy": NaN,
+      "std_f1": NaN,
+      "std_auc": NaN,
+      "fold_metrics": [
+        {
+          "accuracy": NaN,
+          "precision": NaN,
+          "recall": NaN,
+          "f1": NaN,
+          "auc": NaN
+        },
+        {
+          "accuracy": NaN,
+          "precision": NaN,
+          "recall": NaN,
+          "f1": NaN,
+          "auc": NaN
+        },
+        {
+          "accuracy": NaN,
+          "precision": NaN,
+          "recall": NaN,
+          "f1": NaN,
+          "auc": NaN
+        }
+      ]
+    }
+  }
+}

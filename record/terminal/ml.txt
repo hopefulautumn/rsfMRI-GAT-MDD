@@ -1,0 +1,45 @@
+
+rsfMRI-GAT-MDD   on  main [!?⇡] is 📦 v0.1.0 via 🐍 v3.14.0 took 1h6m30s 
+❯ uv run src/train_baseline_cv.py \
+  --npz-path processed/rest_meta_mdd_fc.npz \
+  --output-dir outputs/baseline_cv_formal_grouped_seed42 \
+  --n-splits 5 \
+  --cv-mode grouped \
+  --seed 42 \
+  --models svm,logreg,rf
+Using StratifiedGroupKFold | cv_mode=grouped | n_splits=5 | n_sites=17
+Loaded 1611 samples | feature_dim=6670 | models=['svm', 'logreg', 'rf']
+
+===== Fold 1/5 =====
+[svm] auc=0.7393 | f1=0.6839 | acc=0.6554
+[logreg] auc=0.7130 | f1=0.6828 | acc=0.6667
+[rf] auc=0.7398 | f1=0.7259 | acc=0.6864
+
+===== Fold 2/5 =====
+[svm] auc=0.5618 | f1=0.5909 | acc=0.5135
+[logreg] auc=0.2941 | f1=0.3529 | acc=0.4054
+[rf] auc=0.7559 | f1=0.7308 | acc=0.6216
+
+===== Fold 3/5 =====
+[svm] auc=0.6274 | f1=0.6341 | acc=0.5932
+[logreg] auc=0.6042 | f1=0.6308 | acc=0.5814
+[rf] auc=0.6070 | f1=0.6333 | acc=0.5780
+
+===== Fold 4/5 =====
+[svm] auc=0.7708 | f1=0.7042 | acc=0.6986
+[logreg] auc=0.7691 | f1=0.7179 | acc=0.7368
+[rf] auc=0.7746 | f1=0.7203 | acc=0.6842
+
+===== Fold 5/5 =====
+[svm] auc=0.6392 | f1=0.5633 | acc=0.5986
+[logreg] auc=0.6575 | f1=0.5955 | acc=0.6128
+[rf] auc=0.6116 | f1=0.6164 | acc=0.5891
+
+===== Baseline Summary =====
+svm: AUC=0.6677±0.0767 | F1=0.6353±0.0534 | Acc=0.6118±0.0626
+logreg: AUC=0.6076±0.1661 | F1=0.5960±0.1286 | Acc=0.6006±0.1109
+rf: AUC=0.6978±0.0731 | F1=0.6853±0.0498 | Acc=0.6319±0.0460
+Saved metrics: outputs/baseline_cv_formal_grouped_seed42/baseline_cv_metrics.json
+
+rsfMRI-GAT-MDD   on  main [!?⇡] is 📦 v0.1.0 via 🐍 v3.14.0 took 1m46s 
+❯ 

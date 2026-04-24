@@ -1,0 +1,76 @@
+{
+  "mean_accuracy": 0.5699701314883298,
+  "mean_f1": 0.5234778493333067,
+  "mean_auc": 0.6308772004614224,
+  "std_accuracy": 0.037031640716591825,
+  "std_f1": 0.1178470696325303,
+  "std_auc": 0.029773125796603187,
+  "cv_splitter": "StratifiedGroupKFold",
+  "n_sites": 17,
+  "fold_metrics": [
+    {
+      "accuracy": 0.5112994350282486,
+      "precision": 0.6617647058823529,
+      "recall": 0.23076923076923078,
+      "f1": 0.34220532319391633,
+      "auc": 0.6162876955329786,
+      "loss": 0.6912021170491758
+    },
+    {
+      "accuracy": 0.6216216216216216,
+      "precision": 1.0,
+      "recall": 0.3,
+      "f1": 0.46153846153846156,
+      "auc": 0.638235294117647,
+      "loss": 0.6744635502497355
+    },
+    {
+      "accuracy": 0.5559322033898305,
+      "precision": 0.592274678111588,
+      "recall": 0.4524590163934426,
+      "f1": 0.5130111524163569,
+      "auc": 0.5898763301696864,
+      "loss": 0.6838633869145367
+    },
+    {
+      "accuracy": 0.5933014354066986,
+      "precision": 0.5606060606060606,
+      "recall": 0.7326732673267327,
+      "f1": 0.6351931330472103,
+      "auc": 0.6806930693069306,
+      "loss": 0.7374493522303445
+    },
+    {
+      "accuracy": 0.5676959619952494,
+      "precision": 0.5435435435435435,
+      "recall": 0.8578199052132701,
+      "f1": 0.6654411764705882,
+      "auc": 0.6292936131798692,
+      "loss": 0.689158421975595
+    }
+  ],
+  "config": {
+    "npz_path": "processed/rest_meta_mdd_fc.npz",
+    "output_dir": "outputs/gat_cv_formal_grouped_es_lr",
+    "n_splits": 5,
+    "epochs": 80,
+    "batch_size": 16,
+    "lr": 0.001,
+    "weight_decay": 0.0005,
+    "hidden_channels": 64,
+    "num_heads": 4,
+    "dropout": 0.2,
+    "threshold": 0.0,
+    "top_k": 10,
+    "node_feature_mode": "fc_row",
+    "early_stop_patience": 15,
+    "early_stop_min_delta": 0.0001,
+    "scheduler_patience": 5,
+    "scheduler_factor": 0.5,
+    "scheduler_min_lr": 1e-05,
+    "site_harmonization": "none",
+    "cv_mode": "grouped",
+    "seed": 42,
+    "max_samples": 0
+  }
+}

@@ -136,6 +136,11 @@ def train_one_fold(
     hidden_channels: int,
     num_heads: int,
     dropout: float,
+    early_stop_patience: int,
+    early_stop_min_delta: float,
+    scheduler_patience: int,
+    scheduler_factor: float,
+    scheduler_min_lr: float,
     device: torch.device,
     checkpoint_dir: Path,
 ):
@@ -151,12 +156,20 @@ def train_one_fold(
 
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
     criterion = nn.CrossEntropyLoss()
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer,
+        mode="max",
+        factor=scheduler_factor,
+        patience=scheduler_patience,
+        min_lr=scheduler_min_lr,
+    )
 
     train_loader = DataLoader(train_graphs, batch_size=batch_size, shuffle=True)
     val_loader = DataLoader(val_graphs, batch_size=batch_size, shuffle=False)
 
     best_auc = -1.0
     best_metrics = None
+    no_improve_epochs = 0
 
     for epoch in range(1, epochs + 1):
         model.train()
@@ -171,19 +184,34 @@ def train_one_fold(
             running_loss += float(loss.item())
 
         _, val_metrics = evaluate(model, val_loader, device)
+        current_auc = float(val_metrics["auc"])
+        scheduler.step(current_auc)
+
         # 按验证 AUC 选择最佳模型并持久化。
-        if val_metrics["auc"] >= best_auc:
-            best_auc = val_metrics["auc"]
+        if current_auc >= best_auc + early_stop_min_delta:
+            best_auc = current_auc
             best_metrics = val_metrics
             ckpt_path = checkpoint_dir / f"fold_{fold_id}.pt"
             torch.save(model.state_dict(), ckpt_path)
+            no_improve_epochs = 0
+        else:
+            no_improve_epochs += 1
 
         if epoch % 5 == 0 or epoch == 1 or epoch == epochs:
             train_loss = running_loss / max(len(train_loader), 1)
+            current_lr = optimizer.param_groups[0]["lr"]
             print(
                 f"Fold {fold_id} Epoch {epoch:03d} | train_loss={train_loss:.4f} | "
-                f"val_auc={val_metrics['auc']:.4f} | val_f1={val_metrics['f1']:.4f}"
+                f"val_auc={current_auc:.4f} | val_f1={val_metrics['f1']:.4f} | "
+                f"lr={current_lr:.2e}"
             )
+
+        if no_improve_epochs >= early_stop_patience:
+            print(
+                f"Fold {fold_id} early stopped at epoch {epoch:03d} | "
+                f"best_auc={best_auc:.4f}"
+            )
+            break
 
     return best_metrics
 
@@ -205,6 +233,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--threshold", type=float, default=0.0)
     parser.add_argument("--top-k", type=int, default=20)
     parser.add_argument("--node-feature-mode", type=str, default="fc_row", choices=["fc_row", "ones"])
+    parser.add_argument("--early-stop-patience", type=int, default=15)
+    parser.add_argument("--early-stop-min-delta", type=float, default=1e-4)
+    parser.add_argument("--scheduler-patience", type=int, default=5)
+    parser.add_argument("--scheduler-factor", type=float, default=0.5)
+    parser.add_argument("--scheduler-min-lr", type=float, default=1e-5)
     parser.add_argument(
         "--site-harmonization",
         type=str,
@@ -347,6 +380,11 @@ def main() -> None:
             hidden_channels=args.hidden_channels,
             num_heads=args.num_heads,
             dropout=args.dropout,
+            early_stop_patience=args.early_stop_patience,
+            early_stop_min_delta=args.early_stop_min_delta,
+            scheduler_patience=args.scheduler_patience,
+            scheduler_factor=args.scheduler_factor,
+            scheduler_min_lr=args.scheduler_min_lr,
             device=device,
             checkpoint_dir=ckpt_dir,
         )

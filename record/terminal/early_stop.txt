@@ -1,0 +1,78 @@
+
+rsfMRI-GAT-MDD   on  main [!?⇡] is 📦 v0.1.0 via 🐍 v3.14.0 took 1m46s 
+❯ uv run src/train_gat_cv.py \
+  --npz-path processed/rest_meta_mdd_fc.npz \
+  --output-dir outputs/gat_cv_formal_grouped_es_lr \
+  --n-splits 5 \
+  --epochs 80 \
+  --batch-size 16 \
+  --lr 1e-3 \
+  --weight-decay 5e-4 \
+  --hidden-channels 64 \
+  --num-heads 4 \
+  --dropout 0.2 \
+  --top-k 20 \
+  --node-feature-mode fc_row \
+  --seed 42 \
+  --cv-mode grouped \
+  --early-stop-patience 15 \
+  --early-stop-min-delta 1e-4 \
+  --scheduler-patience 5 \
+  --scheduler-factor 0.5 \
+  --scheduler-min-lr 1e-5
+Device: cpu
+Loaded 1611 samples | in_channels=116
+Using StratifiedGroupKFold | cv_mode=grouped | n_splits=5 | n_sites=17
+
+===== Fold 1/5 =====
+Fold 1 Epoch 001 | train_loss=0.7048 | val_auc=0.5790 | val_f1=0.6791 | lr=1.00e-03
+Fold 1 Epoch 005 | train_loss=0.6911 | val_auc=0.6031 | val_f1=0.6172 | lr=1.00e-03
+Fold 1 Epoch 010 | train_loss=0.6747 | val_auc=0.6067 | val_f1=0.5422 | lr=1.00e-03
+Fold 1 Epoch 015 | train_loss=0.6532 | val_auc=0.6070 | val_f1=0.5722 | lr=1.00e-03
+Fold 1 Epoch 020 | train_loss=0.6147 | val_auc=0.6114 | val_f1=0.6651 | lr=5.00e-04
+Fold 1 Epoch 025 | train_loss=0.5793 | val_auc=0.6108 | val_f1=0.4795 | lr=5.00e-04
+Fold 1 Epoch 030 | train_loss=0.5463 | val_auc=0.6023 | val_f1=0.6839 | lr=2.50e-04
+Fold 1 Epoch 035 | train_loss=0.5179 | val_auc=0.6084 | val_f1=0.6698 | lr=1.25e-04
+Fold 1 early stopped at epoch 035 | best_auc=0.6114
+
+===== Fold 2/5 =====
+Fold 2 Epoch 001 | train_loss=0.7115 | val_auc=0.5412 | val_f1=0.6296 | lr=1.00e-03
+Fold 2 Epoch 005 | train_loss=0.6795 | val_auc=0.5618 | val_f1=0.4848 | lr=1.00e-03
+Fold 2 Epoch 010 | train_loss=0.6583 | val_auc=0.5206 | val_f1=0.5333 | lr=5.00e-04
+Fold 2 Epoch 015 | train_loss=0.6267 | val_auc=0.4882 | val_f1=0.5000 | lr=2.50e-04
+Fold 2 early stopped at epoch 017 | best_auc=0.6588
+
+===== Fold 3/5 =====
+Fold 3 Epoch 001 | train_loss=0.7052 | val_auc=0.4994 | val_f1=0.6816 | lr=1.00e-03
+Fold 3 Epoch 005 | train_loss=0.6788 | val_auc=0.5755 | val_f1=0.6740 | lr=1.00e-03
+Fold 3 Epoch 010 | train_loss=0.6637 | val_auc=0.5851 | val_f1=0.6490 | lr=1.00e-03
+Fold 3 Epoch 015 | train_loss=0.6311 | val_auc=0.5883 | val_f1=0.5743 | lr=1.00e-03
+Fold 3 Epoch 020 | train_loss=0.5683 | val_auc=0.5720 | val_f1=0.5674 | lr=5.00e-04
+Fold 3 Epoch 025 | train_loss=0.5327 | val_auc=0.5685 | val_f1=0.5581 | lr=2.50e-04
+Fold 3 early stopped at epoch 028 | best_auc=0.5979
+
+===== Fold 4/5 =====
+Fold 4 Epoch 001 | train_loss=0.7028 | val_auc=0.6302 | val_f1=0.6584 | lr=1.00e-03
+Fold 4 Epoch 005 | train_loss=0.6799 | val_auc=0.6098 | val_f1=0.6500 | lr=1.00e-03
+Fold 4 Epoch 010 | train_loss=0.6593 | val_auc=0.6109 | val_f1=0.6303 | lr=5.00e-04
+Fold 4 Epoch 015 | train_loss=0.6325 | val_auc=0.5843 | val_f1=0.5983 | lr=2.50e-04
+Fold 4 early stopped at epoch 016 | best_auc=0.6302
+
+===== Fold 5/5 =====
+Fold 5 Epoch 001 | train_loss=0.7071 | val_auc=0.5723 | val_f1=0.3287 | lr=1.00e-03
+Fold 5 Epoch 005 | train_loss=0.6857 | val_auc=0.5958 | val_f1=0.6308 | lr=1.00e-03
+Fold 5 Epoch 010 | train_loss=0.6581 | val_auc=0.6055 | val_f1=0.4688 | lr=1.00e-03
+Fold 5 Epoch 015 | train_loss=0.6473 | val_auc=0.6213 | val_f1=0.6513 | lr=1.00e-03
+Fold 5 Epoch 020 | train_loss=0.6184 | val_auc=0.6097 | val_f1=0.6470 | lr=1.00e-03
+Fold 5 Epoch 025 | train_loss=0.5495 | val_auc=0.6221 | val_f1=0.6150 | lr=5.00e-04
+Fold 5 Epoch 030 | train_loss=0.5190 | val_auc=0.6200 | val_f1=0.5976 | lr=2.50e-04
+Fold 5 early stopped at epoch 033 | best_auc=0.6258
+
+===== CV Summary =====
+AUC: 0.6248 ± 0.0204
+F1 : 0.5489 ± 0.1222
+Acc: 0.5851 ± 0.0155
+Saved metrics: outputs/gat_cv_formal_grouped_es_lr/cv_metrics.json
+
+rsfMRI-GAT-MDD   on  main [!?⇡] is 📦 v0.1.0 via 🐍 v3.14.0 took 34m3s 
+❯ 

@@ -1,0 +1,71 @@
+{
+  "mean_accuracy": 0.5971655481414533,
+  "mean_f1": 0.6448379669132784,
+  "mean_auc": 0.6537529858218329,
+  "std_accuracy": 0.03931176855165437,
+  "std_f1": 0.04147851910838014,
+  "std_auc": 0.036705594221624144,
+  "cv_splitter": "StratifiedKFold",
+  "n_sites": 17,
+  "fold_metrics": [
+    {
+      "accuracy": 0.5634674922600619,
+      "precision": 0.5485074626865671,
+      "recall": 0.8802395209580839,
+      "f1": 0.6758620689655173,
+      "auc": 0.6405650237985567,
+      "loss": 1.1057119305644716
+    },
+    {
+      "accuracy": 0.5527950310559007,
+      "precision": 0.545816733067729,
+      "recall": 0.8203592814371258,
+      "f1": 0.6555023923444976,
+      "auc": 0.6240679930461658,
+      "loss": 0.899192255167734
+    },
+    {
+      "accuracy": 0.6055900621118012,
+      "precision": 0.6363636363636364,
+      "recall": 0.5481927710843374,
+      "f1": 0.5889967637540453,
+      "auc": 0.6495597775718257,
+      "loss": 0.6835177398863292
+    },
+    {
+      "accuracy": 0.5993788819875776,
+      "precision": 0.6149068322981367,
+      "recall": 0.5963855421686747,
+      "f1": 0.6055045871559633,
+      "auc": 0.6295566882916281,
+      "loss": 0.8150402506192526
+    },
+    {
+      "accuracy": 0.6645962732919255,
+      "precision": 0.6510416666666666,
+      "recall": 0.7530120481927711,
+      "f1": 0.6983240223463687,
+      "auc": 0.7250154464009887,
+      "loss": 0.6292825483140492
+    }
+  ],
+  "config": {
+    "npz_path": "processed/rest_meta_mdd_fc.npz",
+    "output_dir": "outputs/gat_cv_formal_stratified_combat_seed42",
+    "n_splits": 5,
+    "epochs": 50,
+    "batch_size": 16,
+    "lr": 0.001,
+    "weight_decay": 0.0005,
+    "hidden_channels": 64,
+    "num_heads": 4,
+    "dropout": 0.2,
+    "threshold": 0.0,
+    "top_k": 20,
+    "node_feature_mode": "fc_row",
+    "site_harmonization": "combat",
+    "cv_mode": "stratified",
+    "seed": 42,
+    "max_samples": 0
+  }
+}
