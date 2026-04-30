@@ -1,6 +1,6 @@
 python src/train_gat_cv.py \
   --npz-path processed/rest_meta_mdd_fc.npz \
-  --output-dir outputs/gat_cv_formal_grouped_es_lr_20_0.5 \
+  --output-dir outputs/gat_cv_formal_grouped_es_lr_40_0.5 \
   --n-splits 5 \
   --epochs 80 \
   --batch-size 16 \
@@ -9,7 +9,7 @@ python src/train_gat_cv.py \
   --hidden-channels 64 \
   --num-heads 4 \
   --dropout 0.5 \
-  --top-k 20 \
+  --top-k 40 \
   --node-feature-mode fc_row \
   --seed 42 \
   --cv-mode grouped \
