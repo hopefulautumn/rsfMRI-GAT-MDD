@@ -93,4 +93,4 @@ AUC: 0.6276 ± 0.0622
 F1 : 0.5519 ± 0.1163
 Acc: 0.5844 ± 0.0635
 Saved metrics: outputs/gat_cv_formal_grouped_es_lr_40_0.5/cv_metrics.json
-(gat) root@autodl-container-611b489072-5a39334a:~/autodl-tmp/rsfMRI-GAT-MDD# 
+(gat) root@autodl-container-611b489072-5a39334a:~/autodl-tmp/rsfMRI-GAT-MDD#
