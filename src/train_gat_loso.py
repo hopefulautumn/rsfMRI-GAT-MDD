@@ -19,7 +19,7 @@ import torch.nn.functional as F
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, roc_auc_score
 from sklearn.model_selection import StratifiedShuffleSplit
 from torch_geometric.loader import DataLoader
-from torch_geometric.nn import GATv2Conv, global_mean_pool
+from torch_geometric.nn import GATv2Conv, global_mean_pool, global_max_pool
 
 from fc_to_graph_dataset import GraphBuildConfig, build_graph_dataset, load_fc_npz
 
@@ -52,7 +52,7 @@ class GATClassifier(nn.Module):
             edge_dim=1,
             concat=True,
         )
-        self.fc = nn.Linear(hidden_channels * num_heads, 2)
+        self.fc = nn.Linear(2 * hidden_channels * num_heads, 2)
 
     def forward(self, data):
         x, edge_index, edge_attr, batch = data.x, data.edge_index, data.edge_attr, data.batch
@@ -62,7 +62,9 @@ class GATClassifier(nn.Module):
         x = self.gat2(x, edge_index, edge_attr=edge_attr)
         x = F.elu(x)
         x = F.dropout(x, p=self.dropout, training=self.training)
-        x = global_mean_pool(x, batch)
+        mean_pool = global_mean_pool(x, batch)
+        max_pool = global_max_pool(x, batch)
+        x = torch.cat([mean_pool, max_pool], dim=1)
         return self.fc(x)
 
 

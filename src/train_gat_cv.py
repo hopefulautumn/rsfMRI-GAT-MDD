@@ -21,7 +21,7 @@ import torch.nn.functional as F
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, roc_auc_score
 from sklearn.model_selection import StratifiedKFold, StratifiedGroupKFold
 from torch_geometric.loader import DataLoader
-from torch_geometric.nn import GATv2Conv, global_mean_pool
+from torch_geometric.nn import GATv2Conv, global_mean_pool, global_max_pool
 
 from fc_to_graph_dataset import GraphBuildConfig, fc_to_graph, load_fc_npz
 from site_harmonization import CombatHarmonizer
@@ -59,8 +59,8 @@ class GATClassifier(nn.Module):
             edge_dim=1,
             concat=True,
         )
-        # 图级分类头，输出2类 logits。
-        self.fc = nn.Linear(hidden_channels * num_heads, 2)
+        # 图级分类头，输出2类 logits。mean+max 池化输出维度翻倍。
+        self.fc = nn.Linear(2 * hidden_channels * num_heads, 2)
 
     def forward(self, data):
         """前向传播：节点更新 -> 图池化 -> 分类。"""
@@ -74,8 +74,10 @@ class GATClassifier(nn.Module):
         x = self.gat2(x, edge_index, edge_attr=edge_attr)
         x = F.elu(x)
         x = F.dropout(x, p=self.dropout, training=self.training)
-        # 图级任务常用全局池化：把节点表示汇总成图表示。
-        x = global_mean_pool(x, batch)
+        # 图级任务使用 mean+max 池化：把节点表示汇总成图表示。
+        mean_pool = global_mean_pool(x, batch)
+        max_pool = global_max_pool(x, batch)
+        x = torch.cat([mean_pool, max_pool], dim=1)
         return self.fc(x)
 
 
